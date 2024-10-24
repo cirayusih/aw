@@ -141,7 +141,11 @@ const runSequentially = async (tokenList, taskList) => {
 const main = async () => {
   const tokens = await majorAPI.fetchToken();
   if (tokens.length > 0) {
-    await runSequentially(tokens, taskIds);
+    while (true) {
+      await runSequentially(tokens, taskIds);
+      console.log('Menunggu 24 jam sebelum memproses ulang...');
+      await delay(24 * 60 * 60 * 1000); // Jeda 24 jam (86.400.000 ms)
+    }
   } else {
     console.error('No tokens available to process.');
   }
